@@ -25,8 +25,8 @@
 
 package net.minecraftforge.com.sun.java.util.jar.pack;
 
-import java.io.IOException;
-import java.io.InputStream;
+import net.minecraftforge.java.util.jar.Pack200;
+
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.security.AccessController;
@@ -41,7 +41,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import net.minecraftforge.java.util.jar.Pack200;
 
 /**
  * Control block for publishing Pack200 options to the other classes.
@@ -67,7 +66,7 @@ final class PropMap implements SortedMap<String, String>  {
         // Allow implementation selected via -Dpack.disable.native=true
         String propValue = getPropertyValue(Utils.DEBUG_DISABLE_NATIVE, "false");
         props.put(Utils.DEBUG_DISABLE_NATIVE,
-                  String.valueOf(Boolean.parseBoolean(propValue)));
+            String.valueOf(Boolean.parseBoolean(propValue)));
 
         // Set the DEBUG_VERBOSE from system
         int verbose = 0;
@@ -95,28 +94,12 @@ final class PropMap implements SortedMap<String, String>  {
         // Pass through files with unrecognized format by default, also
         // allow system property to be set
         props.put(Utils.CLASS_FORMAT_ERROR,
-                  getPropertyValue(Utils.CLASS_FORMAT_ERROR, Pack200.Packer.PASS));
+            getPropertyValue(Utils.CLASS_FORMAT_ERROR, Pack200.Packer.PASS));
 
         // Default effort is 5, midway between 1 and 9.
         props.put(Pack200.Packer.EFFORT, "5");
 
-        // Define certain attribute layouts by default.
-        // Do this after the previous props are put in place,
-        // to allow override if necessary.
-        String propFile = "intrinsic.properties";
-
-        PrivilegedAction<InputStream> pa =
-            () -> PackerImpl.class.getResourceAsStream(propFile);
-        try (InputStream propStr = AccessController.doPrivileged(pa)) {
-            if (propStr == null) {
-                throw new RuntimeException(propFile + " cannot be loaded");
-            }
-            props.load(propStr);
-        } catch (IOException ee) {
-            throw new RuntimeException(ee);
-        }
-
-        for (Entry<Object, Object> e : props.entrySet()) {
+        for (Map.Entry<Object, Object> e : props.entrySet()) {
             String key = (String) e.getKey();
             String val = (String) e.getValue();
             if (key.startsWith("attribute.")) {
@@ -205,7 +188,7 @@ final class PropMap implements SortedMap<String, String>  {
     long toLong(String val) {
         try {
             return val == null ? 0 : Long.parseLong(val);
-        } catch (NumberFormatException nfe) {
+        } catch (java.lang.NumberFormatException nfe) {
             throw new IllegalArgumentException("Invalid value");
         }
     }
@@ -237,8 +220,8 @@ final class PropMap implements SortedMap<String, String>  {
     }
     void list(PrintWriter out) {
         out.println("#"+Utils.PACK_ZIP_ARCHIVE_MARKER_COMMENT+"[");
-        Set<Entry<String, String>> defaults = defaultProps.entrySet();
-        for (Entry<String, String> e : theMap.entrySet()) {
+        Set<Map.Entry<String, String>> defaults = defaultProps.entrySet();
+        for (Map.Entry<String, String> e : theMap.entrySet()) {
             if (defaults.contains(e))  continue;
             out.println("  " + e.getKey() + " = " + e.getValue());
         }
@@ -272,12 +255,12 @@ final class PropMap implements SortedMap<String, String>  {
 
     @Override
     public String remove(Object key) {
-       return theMap.remove(key);
+        return theMap.remove(key);
     }
 
     @Override
     public void putAll(Map<? extends String, ? extends String> m) {
-       theMap.putAll(m);
+        theMap.putAll(m);
     }
 
     @Override
@@ -287,16 +270,16 @@ final class PropMap implements SortedMap<String, String>  {
 
     @Override
     public Set<String> keySet() {
-       return theMap.keySet();
+        return theMap.keySet();
     }
 
     @Override
     public Collection<String> values() {
-       return theMap.values();
+        return theMap.values();
     }
 
     @Override
-    public Set<Entry<String, String>> entrySet() {
+    public Set<Map.Entry<String, String>> entrySet() {
         return theMap.entrySet();
     }
 
@@ -327,6 +310,6 @@ final class PropMap implements SortedMap<String, String>  {
 
     @Override
     public String lastKey() {
-       return theMap.lastKey();
+        return theMap.lastKey();
     }
 }

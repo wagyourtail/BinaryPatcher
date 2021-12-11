@@ -35,11 +35,11 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 import java.util.jar.JarOutputStream;
-import java.util.jar.Pack200;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import net.minecraftforge.java.util.jar.Pack200;
 import org.apache.commons.io.IOUtils;
 
 import com.nothome.delta.GDiffPatcher;

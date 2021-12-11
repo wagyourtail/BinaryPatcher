@@ -888,7 +888,7 @@ class PackageWriter extends BandStructure {
             // Sort by count, most frequent first.
             // Predefs. participate in this sort, though it does not matter.
             Arrays.sort(layoutsAndCounts,
-                        new Comparator<>() {
+                        new Comparator<Map.Entry<Attribute.Layout, int[]>>() {
                 public int compare(Map.Entry<Attribute.Layout, int[]> e0,
                                    Map.Entry<Attribute.Layout, int[]> e1) {
                     // Primary sort key is count, reversed.
@@ -1006,7 +1006,7 @@ class PackageWriter extends BandStructure {
         int numAttrDefs = defList.size();
         Object[][] defs = new Object[numAttrDefs][];
         defList.toArray(defs);
-        Arrays.sort(defs, new Comparator<>() {
+        Arrays.sort(defs, new Comparator<Object[]>() {
             public int compare(Object[] a0, Object[] a1) {
                 // Primary sort key is attr def header.
                 @SuppressWarnings("unchecked")

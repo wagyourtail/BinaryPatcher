@@ -1146,7 +1146,7 @@ class PackageReader extends BandStructure {
         return -1;
     }
 
-    Comparator<ConstantPool.Entry> entryOutputOrder = new Comparator<>() {
+    Comparator<ConstantPool.Entry> entryOutputOrder = new Comparator<ConstantPool.Entry>() {
         public int compare(ConstantPool.Entry e0, ConstantPool.Entry e1) {
             int k0 = getOutputIndex(e0);
             int k1 = getOutputIndex(e1);

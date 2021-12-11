@@ -32,6 +32,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.security.PrivilegedAction;
 import java.util.jar.JarOutputStream;
 import net.minecraftforge.java.util.jar.Pack200;
 import java.util.zip.CRC32;
@@ -88,11 +89,9 @@ class NativeUnpack {
         // If loading from stand alone build uncomment this.
         // System.loadLibrary("unpack");
         java.security.AccessController.doPrivileged(
-            new java.security.PrivilegedAction<>() {
-                public Void run() {
-                    System.loadLibrary("unpack");
-                    return null;
-                }
+            (PrivilegedAction) () -> {
+                System.loadLibrary("unpack");
+                return null;
             });
         initIDs();
     }

@@ -11,7 +11,7 @@ apply plugin: 'eclipse'
 
 group = 'net.minecraftforge'
 version = gitVersion()
-targetCompatibility = sourceCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+targetCompatibility = sourceCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = 11
 
 repositories {
     mavenCentral()
